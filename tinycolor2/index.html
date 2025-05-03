@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tinycolor Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div id="colors" class="flex flex-wrap gap-2 p-4"></div>
+
+    <script type="module">
+      import tinycolor from "https://cdn.skypack.dev/tinycolor2";
+
+      const base = tinycolor("#3662e3");
+
+      const palette = {
+        base: [base],
+        lighter: [base.clone().lighten(20)],
+        darker: [base.clone().darken(20)],
+        complement: [base.clone().complement()],
+        analogous: base.analogous(),
+        monochromatic: base.monochromatic(),
+        splitcomplement: base.splitcomplement(),
+        triad: base.triad(),
+        tetrad: base.tetrad(),
+      };
+
+      const container = document.getElementById("colors");
+
+      Object.entries(palette).forEach(([name, colors]) => {
+        colors.forEach((tc, index) => {
+          const hex = tc.toHexString();
+          const box = document.createElement("div");
+          box.className =
+            "w-32 h-16 rounded shadow text-white flex flex-col justify-center items-center text-xs font-mono p-1";
+          box.style.backgroundColor = hex;
+          box.innerHTML = `<strong>${name}${
+            colors.length > 1 ? ` ${index}` : ""
+          }</strong><div>${hex}</div>`;
+          container.appendChild(box);
+        });
+      });
+    </script>
+  </body>
+</html>
